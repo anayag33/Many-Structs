@@ -1,0 +1,243 @@
+package com.company;
+
+import java.text.DecimalFormat;
+
+public class Main {
+
+    public static void main(String[] args) {
+        System.out.println("moneyToString:");
+        Money g = new Money(5, 10);
+        System.out.println(moneyToString(g));
+        //Lets add all the money values together
+        System.out.println("add:");
+        Money m1 = new Money(1, 10);
+        Money m2 = new Money(2, 20);
+        System.out.println(moneyToString(add(m1, m2)));
+        System.out.println("payWith20:");
+        System.out.println(moneyToString(payWith20(g)));
+        System.out.println("applyInterest:");
+        System.out.println(moneyToString(applyInterest(g, 5)));
+        testCodeMoney();
+
+        System.out.println("pointToString:");
+        Point p = new Point(3, 4);
+        System.out.println(pointToString(p));
+        System.out.println("midpoint:");
+        Point p1 = new Point(2, 5);
+        Point p2 = new Point(8, 5);
+        System.out.println(pointToString(midpoint(p1, p2)));
+        System.out.println("isEqualTo:");
+        System.out.println(isEqual(p1, p2));
+        System.out.println("quadrant:");
+        System.out.println(quadrant(p));
+        System.out.println("verticalStretch:");
+        verticalStretch(p, 2);
+        System.out.println(pointToString(p));
+        System.out.println("horizontalStretch:");
+        horizontalStretch(p, 4);
+        System.out.println(pointToString(p));
+        System.out.println("verticalShift:");
+        verticalShift(p, 3);
+        System.out.println(pointToString(p));
+        System.out.println("horizontalShift:");
+        horizontalShift(p, 4);
+        System.out.println(pointToString(p));
+        testCodePoint();
+    }//end main()
+
+    //PART 2
+    // Returns a nice looking String such as "$1.23"
+    public static String moneyToString(Money m){
+        int d = m.dollars;//calls dollars
+        int c = m.cents;//calls cents
+        String rv = "$" + d + "." + c;//creates string
+        return rv;
+    }//end moneytoString()
+    // Returns the sum of 2 Money objects
+    public static Money add(Money m1, Money m2){
+        int d1 = m1.dollars;
+        int d2 = m2.dollars;
+        int c1 = m1.cents;
+        int c2 = m2.cents;
+        int totalDollars = d1 + d2;//adds dollars
+        int totalCents = c1 + c2;//adds cents
+        Money n = new Money(totalDollars, totalCents);
+        return n;
+    }//end add()
+    public static Money payWith20(Money m){
+        int d = m.dollars;
+        int c = m.cents;
+        int dollars = 20-(d+1);//subtracts dollars from 20
+        int cents = 100-c;//subtracts cents from 20
+        Money n = new Money(dollars, cents);
+        return n;
+    }//end payWith20()
+    public static Money applyInterest(Money m, int interestRate){
+        int d = m.dollars*100;//makes dollars larger
+        int c = m.cents;
+        int rate = 100 + interestRate;//makes interest rate into a full number
+        int totalMoney = d + c;
+        totalMoney = totalMoney*rate;//multiplies money by rate
+        d = totalMoney/10000;//dollars == int division
+        c = totalMoney%10000;//cents == modular division
+        c = c/100;
+        Money n = new Money(d, c);
+        return n;
+    }//end applyInterest()
+    public static void testCodeMoney(){
+        DecimalFormat df = new DecimalFormat("#0.00");//rounds decimal to 2 places
+        System.out.println("100 element array sum:");
+        double [] a = new double[100];//new array
+        double start = 0.01;//first value
+        double sum = 0;
+        for (int i = 0; i<a.length; i++){
+            a[i] = start;
+            sum = sum + a[i];//adds values
+            start = start + 0.01;//increases start by 0.01 each time
+        }
+        System.out.println(df.format(sum));
+
+        System.out.println("$10 per day with 1% interest per month:");
+        double money = 0;
+        for (int i = 1; i<366; i++){
+            money = money +10;//increases by 10 each time
+            if (i == 31||i == 59||i == 90||i == 120||i == 151||i == 181||i == 212||i == 243||i == 273||i == 304||i == 334||i == 31||i == 365)
+                money = money + ((money*101)/100);//adds unique value every month
+        }
+        System.out.println(df.format(money));
+
+        System.out.println("Safeway problem:");
+        double one = 5;
+        double two = 2.50;
+        double three = 1.33;
+        double four = 3.29;
+        double five = 1.99;
+        double tax = 8.25 / 100;//makes tax into decimal value
+        tax = 1 + tax;//adds 1 to tax decimal
+        double rv = (one + two + three + four + five) * tax;//money times tax
+        System.out.println(df.format(rv));
+    }//end testCodeMoney()
+
+    //PART 4
+    //Returns a nice looking String such as "(1,2)"
+    public static String pointToString(Point p){
+        String rv = "(" + p.xValue + "," + p.yValue + ")";//makes string
+        return rv;
+    }//end pointToString()
+    // Returns the midpoint between 2 Points
+    public static Point midpoint(Point p1, Point p2){
+        int x = 0;
+        int y = 0;
+        if (p1.xValue == p2.xValue){
+            x = p1.xValue;
+            y = (p2.yValue - p1.yValue) / 2;//halfway between points
+            y = p1.yValue + y;//adds half value to original value
+        }
+        if (p1.yValue == p2.yValue){
+            y = p1.yValue;
+            x = (p2.xValue - p1.xValue) / 2;//halfway between points
+            x = p1.xValue + x;//adds half value to original value
+        }
+        Point p = new Point(x, y);
+        return p;
+    }//end midpoint()
+    public static boolean isEqual(Point p1, Point p2){
+        boolean rv = false;
+        if (p1.xValue == p2.xValue && p1.yValue == p2.yValue)
+            rv = true;//turns true if all values are same
+        return rv;
+    }//end isEqual
+    public static int quadrant(Point p){
+        int rv = 0;
+        if (p.xValue > 0 && p.yValue > 0)// positive and positive
+            rv = 1;
+        if (p.xValue < 0 && p.yValue > 0)//negative and positive
+            rv = 2;
+        if (p.xValue < 0 && p.yValue < 0)//negative and negative
+            rv = 3;
+        if (p.xValue > 0 && p.yValue < 0)//positive and negative
+            rv = 4;
+        return rv;
+    }//end quadrant()
+    //Stretch up and down
+    public static void verticalStretch(Point p, int a){
+        p.yValue = p.yValue * a;//multiply y value by a
+    }//end verticalStretch()
+    // Stretch left and right
+    public static void horizontalStretch(Point p, int a){
+        p.xValue = p.xValue * a;//multiply x value by a
+    }//end horizontalStretch()
+    // Shift up and down
+    public static void verticalShift(Point p, int a){
+        p.yValue = p.yValue + a;//add a to y value
+    }//end verticalShift()
+    // Shift left and right
+    public static void horizontalShift(Point p, int a){
+        p.xValue = p.xValue + a;//add a to x value
+    }//end horizontalShift()
+
+    //PART 5
+    public static void testCodePoint(){
+        System.out.println("5 points:");
+        Point[] a = new Point[5];
+        for (int i = 1; i<a.length+1; i++) {//for loop to assign values
+            a[i-1] = new Point(2*i, ((2*i)*2)+3);//assigns x and y value according to pattern
+            System.out.println(pointToString(a[i-1]));
+        }
+
+        System.out.println("Vertical stretch by 3:");
+        for (int i = 0; i<a.length; i++) {
+            verticalStretch(a[i], 3);//calls vertical stretch function
+            System.out.println(pointToString(a[i]));
+        }
+
+        System.out.println("Horizontal stretch by 2:");
+        for (int i = 0; i<a.length; i++) {
+            horizontalStretch(a[i], 2);//calls horizontal stretch function
+            System.out.println(pointToString(a[i]));
+        }
+
+        System.out.println("Vertical shift down 1:");
+        for (int i = 0; i<a.length; i++) {
+            verticalShift(a[i], -1);//calls vertical shift function
+            System.out.println(pointToString(a[i]));
+        }
+
+        System.out.println("Horizontal shift right 2:");
+        for (int i = 0; i<a.length; i++) {
+            horizontalShift(a[i], 2);//calls horizontal shift function
+            System.out.println(pointToString(a[i]));
+        }
+
+        System.out.println("Simulate sine by an array of Points:");
+        Point[] b = new Point[5];//new Point array
+        double x = 0;
+        int y = 0;
+        for (int i = 0; i<b.length; i++) {
+            x = i * 1.57;//1.57 times i is x value
+            if (i == 0 || i == 4)//assigns y value correspondingly
+                y = 0;
+            if (i == 1)
+                y = 1;
+            if (i == 2)
+                y = 0;
+            if (i == 3)
+                y = -1;
+            System.out.println("("+x+","+y+")");
+        }
+
+        System.out.println("Vertical shift up 2 and vertical stretch by 2:");
+        for (int i = 0; i<a.length; i++) {
+            verticalShift(a[i], 2);//calls vertical shift function
+            verticalStretch(a[i], 2);//calls vertical stretch function
+            System.out.println(pointToString(a[i]));
+        }
+
+        System.out.println("Vertical stretch by 2 and vertical shift by 2:");
+        for (int i = 0; i<a.length; i++) {
+            verticalStretch(a[i], 2);//calls vertical stretch function
+            verticalShift(a[i], 2);//calls vertical shift function
+            System.out.println(pointToString(a[i]));
+        }
+    }//end testCodePoint()
+}
