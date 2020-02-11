@@ -1,0 +1,16 @@
+package com.company;
+
+public class Money {
+    int dollars = 0;
+    int cents = 0;
+
+    public Money(){
+    }
+
+    //the goal of constructor is to initialize everything
+    public Money (int d, int c){
+        dollars = d;
+        cents = c;
+    }
+
+}
