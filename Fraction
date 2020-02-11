@@ -1,0 +1,15 @@
+package com.company;
+
+public class Fraction {
+    int numerator = 0;
+    int denominator = 0;
+
+    public Fraction(){
+    }
+
+    public Fraction(int n, int d){
+        numerator = n;
+        denominator = d;
+    }
+}
+
