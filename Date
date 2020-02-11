@@ -1,0 +1,16 @@
+package com.company;
+
+public class Date {
+    String month = "";
+    int day = 0;
+    int year = 0;
+
+    public Date(){
+    }
+
+    public Date(String m, int d, int y){
+        month = m;
+        day = d;
+        year = y;
+    }
+}
