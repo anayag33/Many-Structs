@@ -1,0 +1,26 @@
+package com.company;
+
+public class CreditCardAccount {
+    String firstName = "";
+    String lastName = "";
+    int accountNumber = 0;
+    String bankName = "";
+    int amtMoney = 0;
+    int cvcNumber = 0;
+    int expirationDate = 0;
+    String cardType = "";
+
+    public CreditCardAccount(){
+    }
+
+    public CreditCardAccount(String first, String last, int number, String name, int money, int cvc, int date, String type){
+        firstName = first;
+        lastName = last;
+        accountNumber = number;
+        bankName = name;
+        amtMoney = money;
+        cvcNumber = cvc;
+        expirationDate = date;
+        cardType = type;
+    }
+}
